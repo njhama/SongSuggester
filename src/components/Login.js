@@ -1,9 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState, useEffect} from 'react';
-import MainPage from './components/MainPage';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+function Login() {
   const CLIENT_ID = "e274806929574399a5e9250ccc04c7ad";
   const REDIRECT_URI = "http://localhost:3000";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/en/authorize";
@@ -27,24 +24,15 @@ function App() {
     setToken(token)
   }, [])
 
+  return (
+    <div>
+      <h1>hi</h1>
+      <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`}>
+  Login with Spotify
+</a>
 
-  if (!token) {
-    return (
-      <div>
-        <h1>Spotify Quiz</h1>
-        <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`}>
-          Login with Spotify
-        </a>
-  
-      </div>
-    );
-  }
-  else {
-    return (
-      <MainPage token = {token}></MainPage>
-    )
-  }
-  
+    </div>
+  );
 }
 
-export default App;
+export default Login;
