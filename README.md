@@ -1,5 +1,6 @@
 # SongSuggester
-Displays users top songs as well as suggestions
+Displays users top songs as well as suggestions based on most listened to tracks
+
 ![Alt text](Other/myimg.png "img")
 
 ## Features
