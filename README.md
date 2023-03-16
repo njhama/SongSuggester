@@ -1,5 +1,6 @@
 # SongSuggester
 Displays users top songs as well as suggestions
+![Alt text](Other/myimg.png "img")
 
 ## Features
 * Authentication with Spotify account
