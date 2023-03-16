@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect} from 'react';
 import MainPage from './components/MainPage';
+import './index.css'
 
 function App() {
   const scope = 'user-read-private user-read-email playlist-read-private user-top-read';
@@ -35,7 +36,7 @@ function App() {
   if (!token) {
     return (
       <div>
-        <h1>Spotify Quiz</h1>
+        <h1>Song Suggester</h1>
         <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${scope}`}>
           Login with Spotify
         </a>

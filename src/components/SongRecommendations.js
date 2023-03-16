@@ -22,7 +22,7 @@ function SongRec() {
             'Authorization': `Bearer ${token}`
           },
           params: {
-            'limit': 10,
+            'limit': 20,
             'seed_tracks': trackIds.join(',')
           }
         })
@@ -49,13 +49,13 @@ function SongRec() {
       <div>
         <label htmlFor="time-range">Time Range:</label>
         <select id="time-range" value={timeRange} onChange={handleTimeRangeChange}>
-          <option value="short_term">Short-term</option>
-          <option value="medium_term">Medium-term</option>
-          <option value="long_term">Long-term</option>
+          <option value="short_term">Last 4 weeks</option>
+          <option value="medium_term">Last 6 months</option>
+          <option value="long_term">All Time</option>
         </select>
       </div>
 
-      <h1>My Top Songs:</h1>
+      <h2>My Top Songs:</h2>
       <table>
         <thead>
           <tr>
@@ -75,7 +75,7 @@ function SongRec() {
         </tbody>
       </table>
 
-      <h1>Recommended Songs:</h1>
+      <h2>Recommended Songs:</h2>
       <table>
         <thead>
           <tr>

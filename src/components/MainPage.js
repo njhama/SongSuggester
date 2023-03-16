@@ -29,7 +29,7 @@ function MainPage(props) {
 
   return (
     <div>
-      <h1>Song Rec</h1>
+      <h1>SongSuggester</h1>
       <SongR> </SongR>
     </div>
   );
