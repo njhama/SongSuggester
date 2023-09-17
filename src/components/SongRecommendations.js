@@ -2,11 +2,74 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SongRec.css';
 
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+const FETCH_TOP_SONGS = gql`
+  query FetchTopSongs($timeRange: String!) {
+    topSongs(timeRange: $timeRange) {
+      id
+      name
+      artist
+      album
+    }
+  }
+`;
+
+
+const SAVE_TOP_SONGS = gql`
+  mutation SaveTopSongs($songs: [TopSongInput!]!) {
+    saveTopSongs(songs: $songs) {
+      id
+      name
+      artist
+      album
+    }
+  }
+`;
+
 function SongRec() {
-  const [topTracks, setTopTracks] = useState([]);
+  const [topTracks,  setTopTracks] = useState([]);
   const [recommendedTracks, setRecommendedTracks] = useState([]);
   const [timeRange, setTimeRange] = useState('long_term');
+  const { loading, error, data } = useQuery(FETCH_TOP_SONGS, {
+    variables: { timeRange },
+  })
 
+  const [saveTopSongs, { data: savedTopSongsData }] = useMutation(SAVE_TOP_SONGS);
+
+  
+  
+
+  function handleTimeRangeChange(event) {
+    setTimeRange(event.target.value);
+  }
+
+  // Function to save top songs when the button is clicked
+  function handleSaveTopSongs() {
+    console.log(topTracks);
+    console.log('here')
+    try {
+      saveTopSongs({
+        variables: {
+          songs: topTracks.map((track) => ({
+            id: track.id,
+            name: track.name,
+            artist: track.artist,
+            album: track.album,
+          })),
+        },
+      }).then((response) => {
+        console.log('Top songs saved:', response.data.saveTopSongs);
+      });
+    } catch (error) {
+      console.error('Error saving top songs:', error);
+    }
+
+    console.log('done')
+  }
+  
+ 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -94,6 +157,43 @@ function SongRec() {
           ))}
         </tbody>
       </table>
+
+
+      <h2>Past Songs</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Album</th>
+            <th>Song</th>
+            <th>Artist</th>
+          </tr>
+        </thead>
+        <tbody>
+  {loading ? (
+    <tr>
+      <td>Loading saved top songs...</td>
+    </tr>
+  ) : error ? (
+    <tr>
+      <td>Error loading saved top songs.</td>
+    </tr>
+  ) : savedTopSongsData && savedTopSongsData.saveTopSongs ? (
+    savedTopSongsData.saveTopSongs.map((track) => (
+      <tr key={track.id}>
+        <td>{track.album}</td>
+        <td>{track.name}</td>
+        <td>{track.artist}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>No saved top songs available.</td>
+    </tr>
+  )}
+</tbody>
+
+      </table>
+      <button onClick={handleSaveTopSongs}>Save Top Songs</button>
     </div>
   );
 }

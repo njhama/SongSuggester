@@ -1,0 +1,14 @@
+query FetchTopSongs($timeRange: String!) {
+  topSongs(timeRange: $timeRange) {
+    id
+    name
+    artists {
+      name
+    }
+    album {
+      images {
+        url
+      }
+    }
+  }
+}
