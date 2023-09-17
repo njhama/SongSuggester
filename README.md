@@ -14,3 +14,8 @@ Displays users top songs as well as suggestions based on most listened to tracks
 * REST
 * Axios
 * Spotify Web API
+* Apollo Server
+* GraphQL
+* Node.Js
+* Express.js
+  
